@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { ProductRepository } from '../ports/product.repository';
+import { ProductRepository } from '../repositories/product.repository';
 
 @Injectable({ providedIn: 'root' })
 export class VerifyProductIdUseCase {
