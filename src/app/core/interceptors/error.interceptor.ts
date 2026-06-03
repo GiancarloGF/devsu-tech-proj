@@ -1,30 +1,13 @@
-// import { Injectable } from '@angular/core';
-// import {
-//   HttpEvent,
-//   HttpHandler,
-//   HttpInterceptor,
-//   HttpRequest,
-//   HttpErrorResponse
-// } from '@angular/common/http';
-// import { Observable, throwError } from 'rxjs';
-// import { catchError } from 'rxjs/operators';
+import { HttpInterceptorFn } from '@angular/common/http';
+import { catchError, throwError } from 'rxjs';
 
-// @Injectable()
-// export class ErrorInterceptor implements HttpInterceptor {
-//   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-//     return next.handle(req).pipe(
-//       catchError((error: HttpErrorResponse) => {
-//         let errorMessage = 'An unexpected error occurred.';
-
-//         if (error.error && error.error.message) {
-//           errorMessage = error.error.message;
-//         } else if (error.message) {
-//           errorMessage = error.message;
-//         }
-
-//         console.error('HTTP Error:', error);
-//         return throwError(() => new Error(errorMessage));
-//       })
-//     );
-//   }
-// }
+export const errorInterceptor: HttpInterceptorFn = (req, next) => {
+  return next(req).pipe(
+    catchError(error => {
+      const message = error?.error?.message ?? 'Ha ocurrido un error inesperado';
+      //TODO: agregar toast service global
+      console.error('[errorInterceptor][HTTP Error]', message);
+      return throwError(() => new Error(message));
+    }),
+  );
+};
