@@ -18,9 +18,23 @@ export class ProductRowComponent {
   delete = output<Product>();
 
   readonly isMenuOpen = signal(false);
+  readonly menuPosition = signal({ top: 0, left: 0 });
 
-  toggleMenu(): void {
-    this.isMenuOpen.update(open => !open);
+  toggleMenu(event: MouseEvent): void {
+    if (this.isMenuOpen()) {
+      this.closeMenu();
+      return;
+    }
+
+    const trigger = event.currentTarget as HTMLElement;
+    const triggerRect = trigger.getBoundingClientRect();
+    const menuWidth = 130;
+
+    this.menuPosition.set({
+      top: triggerRect.bottom + 4,
+      left: Math.max(8, Math.min(triggerRect.right - menuWidth, window.innerWidth - menuWidth - 8)),
+    });
+    this.isMenuOpen.set(true);
   }
 
   closeMenu(): void {

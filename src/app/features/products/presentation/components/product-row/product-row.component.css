@@ -1,8 +1,16 @@
+:host {
+  display: contents;
+}
+
 .product-row td {
   padding: 12px var(--spacing-md);
   vertical-align: middle;
   color: var(--color-text);
   font-size: var(--font-size-sm);
+}
+
+.cell-name {
+  font-weight: 500;
 }
 
 /* ── Logo ────────────────────────────────────────────────────────────── */
@@ -70,15 +78,13 @@
 }
 
 .dropdown-menu {
-  position: absolute;
-  right: 0;
-  top: calc(100% + 4px);
+  position: fixed;
   background: var(--color-white);
   border: 1px solid var(--color-border);
   border-radius: var(--border-radius);
   box-shadow: var(--shadow-card);
   min-width: 130px;
-  z-index: 100;
+  z-index: 1000;
   overflow: hidden;
 }
 
@@ -110,7 +116,7 @@
 /* Responsive: ocultar descripción y fecha liberación */
 @media (max-width: 768px) {
   .cell-desc,
-  .cell-date:first-of-type {
+  .cell-date:nth-of-type(4) {
     display: none;
   }
 }

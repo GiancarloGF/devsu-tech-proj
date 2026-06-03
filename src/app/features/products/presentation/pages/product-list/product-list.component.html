@@ -76,6 +76,6 @@
     [isOpen]="isDeleteModalOpen()"
     [productName]="productToDelete()?.name ?? ''"
     (confirm)="onDeleteConfirm()"
-    (cancel)="onDeleteCancel()"
+    (canceled)="onDeleteCancel()"
   />
 </section>

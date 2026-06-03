@@ -7,8 +7,31 @@
 
 .product-table {
   width: 100%;
+  min-width: 900px;
   border-collapse: collapse;
   font-size: var(--font-size-sm);
+  table-layout: fixed;
+}
+
+.product-table thead th:nth-child(1) {
+  width: 80px;
+}
+
+.product-table thead th:nth-child(2) {
+  width: 240px;
+}
+
+.product-table thead th:nth-child(3) {
+  width: 280px;
+}
+
+.product-table thead th:nth-child(4),
+.product-table thead th:nth-child(5) {
+  width: 160px;
+}
+
+.product-table thead th:nth-child(6) {
+  width: 56px;
 }
 
 .product-table thead th {

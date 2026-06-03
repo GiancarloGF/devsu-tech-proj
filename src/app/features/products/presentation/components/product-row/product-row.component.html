@@ -26,12 +26,16 @@
   <!-- Menú dropdown -->
   <td class="cell-menu">
     <div class="dropdown-wrapper" appClickOutside (clickOutside)="closeMenu()">
-      <button class="menu-trigger" (click)="toggleMenu()" aria-label="Opciones del producto">
+      <button class="menu-trigger" (click)="toggleMenu($event)" aria-label="Opciones del producto">
         &#8942;
       </button>
 
       @if (isMenuOpen()) {
-        <div class="dropdown-menu">
+        <div
+          class="dropdown-menu"
+          [style.top.px]="menuPosition().top"
+          [style.left.px]="menuPosition().left"
+        >
           <button class="dropdown-item" (click)="onEdit()">Editar</button>
           <button class="dropdown-item dropdown-item--danger" (click)="onDelete()">Eliminar</button>
         </div>
