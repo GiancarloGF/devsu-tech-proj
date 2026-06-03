@@ -8,7 +8,7 @@ import { Product } from '../../../domain/models/product.model';
   standalone: true,
   imports: [CommonModule, ClickOutsideDirective],
   templateUrl: './product-row.component.html',
-  styleUrl: './product-row.component.scss',
+  styleUrl: './product-row.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ProductRowComponent {

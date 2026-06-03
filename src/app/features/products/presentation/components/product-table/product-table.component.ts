@@ -8,7 +8,7 @@ import { ProductRowComponent } from '../product-row/product-row.component';
   standalone: true,
   imports: [CommonModule, ProductRowComponent],
   templateUrl: './product-table.component.html',
-  styleUrl: './product-table.component.scss',
+  styleUrl: './product-table.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ProductTableComponent {

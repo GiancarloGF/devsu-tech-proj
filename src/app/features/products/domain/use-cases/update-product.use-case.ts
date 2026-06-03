@@ -3,7 +3,7 @@ import { Observable } from 'rxjs';
 import { Product } from '../models/product.model';
 import { ProductRepository } from '../repositories/product.repository';
 
-@Injectable({ providedIn: 'root' })
+@Injectable()
 export class UpdateProductUseCase {
   private readonly repo = inject(ProductRepository);
 

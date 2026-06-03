@@ -2,7 +2,7 @@ import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ProductRepository } from '../repositories/product.repository';
 
-@Injectable({ providedIn: 'root' })
+@Injectable()
 export class DeleteProductUseCase {
   private readonly repo = inject(ProductRepository);
 
