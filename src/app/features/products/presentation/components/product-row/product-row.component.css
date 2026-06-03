@@ -1,0 +1,116 @@
+.product-row td {
+  padding: 12px var(--spacing-md);
+  vertical-align: middle;
+  color: var(--color-text);
+  font-size: var(--font-size-sm);
+}
+
+/* ── Logo ────────────────────────────────────────────────────────────── */
+.cell-logo {
+  width: 56px;
+}
+
+.logo-wrapper {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--color-bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  border: 1px solid var(--color-border);
+}
+
+.product-logo {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+/* ── Descripción y fechas ────────────────────────────────────────────── */
+.cell-desc {
+  max-width: 200px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: var(--color-text-muted);
+}
+
+.cell-date {
+  white-space: nowrap;
+  color: var(--color-text-muted);
+}
+
+/* ── Menú dropdown ───────────────────────────────────────────────────── */
+.cell-menu {
+  width: 48px;
+  text-align: center;
+}
+
+.dropdown-wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+.menu-trigger {
+  background: none;
+  border: none;
+  font-size: 1.25rem;
+  cursor: pointer;
+  color: var(--color-text-muted);
+  line-height: 1;
+  padding: 4px 8px;
+  border-radius: var(--border-radius);
+  transition: background 0.15s;
+}
+
+.menu-trigger:hover {
+  background: var(--color-bg);
+}
+
+.dropdown-menu {
+  position: absolute;
+  right: 0;
+  top: calc(100% + 4px);
+  background: var(--color-white);
+  border: 1px solid var(--color-border);
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow-card);
+  min-width: 130px;
+  z-index: 100;
+  overflow: hidden;
+}
+
+.dropdown-item {
+  display: block;
+  width: 100%;
+  padding: 10px var(--spacing-md);
+  text-align: left;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: var(--font-size-sm);
+  color: var(--color-text);
+  transition: background 0.15s;
+}
+
+.dropdown-item:hover {
+  background: var(--color-bg);
+}
+
+.dropdown-item--danger {
+  color: var(--color-error);
+}
+
+.dropdown-item--danger:hover {
+  background: #fdecea;
+}
+
+/* Responsive: ocultar descripción y fecha liberación */
+@media (max-width: 768px) {
+  .cell-desc,
+  .cell-date:first-of-type {
+    display: none;
+  }
+}

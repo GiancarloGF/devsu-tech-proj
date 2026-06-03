@@ -1,0 +1,30 @@
+@if (isOpen()) {
+  <div
+    class="modal-overlay"
+    role="button"
+    tabindex="0"
+    (click)="canceled.emit()"
+    (keydown.enter)="canceled.emit()"
+    (keydown.space)="canceled.emit()"
+  >
+    <div
+      class="modal-box"
+      role="dialog"
+      aria-modal="true"
+      tabindex="-1"
+      (click)="$event.stopPropagation()"
+      (keydown.enter)="$event.stopPropagation()"
+      (keydown.space)="$event.stopPropagation()"
+    >
+      <p class="modal-message">
+        ¿Estás seguro de eliminar el producto
+        <strong>{{ productName() }}</strong
+        >?
+      </p>
+      <div class="modal-actions">
+        <button class="btn-secondary" (click)="canceled.emit()">Cancelar</button>
+        <button class="btn-primary" (click)="confirm.emit()">Confirmar</button>
+      </div>
+    </div>
+  </div>
+}

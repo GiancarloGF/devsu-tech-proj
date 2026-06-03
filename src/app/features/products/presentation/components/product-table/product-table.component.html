@@ -1,0 +1,27 @@
+<div class="table-wrapper">
+  <table class="product-table">
+    <thead>
+      <tr>
+        <th>Logo</th>
+        <th>Nombre del producto</th>
+        <th>Descripción</th>
+        <th>Fecha de liberación</th>
+        <th>Fecha de reestructuración</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (product of products(); track product.id) {
+        <app-product-row
+          [product]="product"
+          (edit)="edit.emit($event)"
+          (delete)="delete.emit($event)"
+        />
+      } @empty {
+        <tr>
+          <td colspan="6" class="empty-state">No se encontraron productos</td>
+        </tr>
+      }
+    </tbody>
+  </table>
+</div>

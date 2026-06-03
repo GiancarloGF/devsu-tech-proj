@@ -1,0 +1,41 @@
+<tr class="product-row">
+  <!-- Logo -->
+  <td class="cell-logo">
+    <div class="logo-wrapper">
+      <img
+        [src]="product().logo"
+        [alt]="product().name"
+        class="product-logo"
+        (error)="$any($event.target).src = 'assets/logo-placeholder.png'"
+      />
+    </div>
+  </td>
+
+  <!-- Nombre -->
+  <td class="cell-name">{{ product().name }}</td>
+
+  <!-- Descripción -->
+  <td class="cell-desc">{{ product().description }}</td>
+
+  <!-- Fecha liberación -->
+  <td class="cell-date">{{ product().date_release }}</td>
+
+  <!-- Fecha revisión -->
+  <td class="cell-date">{{ product().date_revision }}</td>
+
+  <!-- Menú dropdown -->
+  <td class="cell-menu">
+    <div class="dropdown-wrapper" appClickOutside (clickOutside)="closeMenu()">
+      <button class="menu-trigger" (click)="toggleMenu()" aria-label="Opciones del producto">
+        &#8942;
+      </button>
+
+      @if (isMenuOpen()) {
+        <div class="dropdown-menu">
+          <button class="dropdown-item" (click)="onEdit()">Editar</button>
+          <button class="dropdown-item dropdown-item--danger" (click)="onDelete()">Eliminar</button>
+        </div>
+      }
+    </div>
+  </td>
+</tr>

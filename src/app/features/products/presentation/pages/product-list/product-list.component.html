@@ -1,0 +1,81 @@
+<section class="product-list-page">
+  <!-- Barra de herramientas: búsqueda + botón agregar -->
+  <div class="toolbar">
+    <input
+      class="search-input"
+      type="text"
+      placeholder="Search..."
+      [value]="searchTerm()"
+      (input)="onSearch($any($event.target).value)"
+    />
+    <button class="btn-primary" (click)="navigateToAdd()">Agregar</button>
+  </div>
+
+  <!-- Error de carga -->
+  @if (productsResource.error()) {
+    <div class="error-banner">
+      Error al cargar los productos.
+      <button class="btn-link" (click)="productsResource.reload()">Reintentar</button>
+    </div>
+  }
+
+  <!-- Error de eliminación -->
+  @if (deleteErrorMessage()) {
+    <div class="error-banner">{{ deleteErrorMessage() }}</div>
+  }
+
+  <!-- Skeleton mientras carga -->
+  @if (productsResource.isLoading()) {
+    <app-skeleton [rowCount]="pageSize()" />
+  }
+
+  <!-- Tabla de productos -->
+  @if (productsResource.hasValue()) {
+    <app-product-table
+      [products]="pagedProducts()"
+      (edit)="onEditRequest($event)"
+      (delete)="onDeleteRequest($event)"
+    />
+
+    <!-- Footer: total de resultados + selector de página -->
+    <div class="table-footer">
+      <span class="results-count">{{ totalResults() }} Resultados</span>
+
+      <div class="pagination-controls">
+        <!-- Paginación simple -->
+        @if (totalPages() > 1) {
+          <div class="pagination">
+            @for (page of pagesArray(); track page) {
+              <button
+                class="page-btn"
+                [class.active]="currentPage() === page"
+                (click)="onPageChange(page)"
+              >
+                {{ page }}
+              </button>
+            }
+          </div>
+        }
+
+        <!-- Selector de cantidad -->
+        <select
+          class="page-size-select"
+          [value]="pageSize()"
+          (change)="onPageSizeChange(+$any($event.target).value)"
+        >
+          @for (opt of pageSizeOptions; track opt) {
+            <option [value]="opt">{{ opt }}</option>
+          }
+        </select>
+      </div>
+    </div>
+  }
+
+  <!-- Modal de confirmación de eliminación -->
+  <app-delete-modal
+    [isOpen]="isDeleteModalOpen()"
+    [productName]="productToDelete()?.name ?? ''"
+    (confirm)="onDeleteConfirm()"
+    (cancel)="onDeleteCancel()"
+  />
+</section>
