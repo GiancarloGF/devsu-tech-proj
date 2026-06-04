@@ -9,13 +9,14 @@ export default defineConfig({
     coverage: {
       provider: 'v8',
       reporter: ['text', 'lcov', 'html'],
+      include: ['src/**/*.ts'],
       thresholds: {
         statements: 70,
         branches: 70,
         functions: 70,
         lines: 70,
       },
-      exclude: ['node_modules/', 'src/environments/', '**/*.routes.ts', '**/index.ts'],
+      exclude: ['node_modules/', 'src/environments/', '**/*.routes.ts', '**/index.ts', '**/*.html'],
     },
   },
 });
