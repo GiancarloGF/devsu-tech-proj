@@ -4,7 +4,6 @@
     <hr class="form-divider" />
 
     <form [formGroup]="form" (ngSubmit)="onSubmit()" novalidate>
-      <!-- Fila 1: ID + Nombre -->
       <div class="form-grid">
         <div class="form-field" [class.is-invalid]="isFieldInvalid('id')">
           <label for="id">ID</label>
@@ -26,7 +25,6 @@
         </div>
       </div>
 
-      <!-- Fila 2: Descripción + Logo -->
       <div class="form-grid">
         <div class="form-field" [class.is-invalid]="isFieldInvalid('description')">
           <label for="description">Descripción</label>
@@ -45,7 +43,6 @@
         </div>
       </div>
 
-      <!-- Fila 3: Fecha liberación + Fecha revisión -->
       <div class="form-grid">
         <div class="form-field" [class.is-invalid]="isFieldInvalid('date_release')">
           <label for="date_release">Fecha Liberación</label>
@@ -63,7 +60,7 @@
           }
         </div>
 
-        <div class="form-field">
+        <div class="form-field" [class.is-invalid]="isFieldInvalid('date_revision')">
           <label for="date_revision">Fecha Revisión</label>
           <input
             id="date_revision"
@@ -72,17 +69,20 @@
             inputmode="numeric"
             maxlength="10"
             placeholder="dd/mm/aaaa"
+            readonly
           />
-          <span class="field-hint">Se calcula automáticamente</span>
+          @if (isFieldInvalid('date_revision')) {
+            <span class="field-error">{{ getFieldError('date_revision') }}</span>
+          } @else {
+            <span class="field-hint">Se calcula automáticamente</span>
+          }
         </div>
       </div>
 
-      <!-- Error global de envío -->
       @if (errorMessage()) {
         <div class="form-error-banner">{{ errorMessage() }}</div>
       }
 
-      <!-- Acciones -->
       <div class="form-actions">
         <button type="button" class="btn-secondary" (click)="onReset()" [disabled]="isSubmitting()">
           Reiniciar

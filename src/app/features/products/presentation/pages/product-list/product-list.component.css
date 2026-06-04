@@ -1,10 +1,9 @@
 .product-list-page {
   max-width: 1100px;
-  margin: var(--spacing-lg) auto;
-  padding: 0 var(--spacing-md);
+  margin: 0 auto;
+  padding: 72px var(--spacing-md) 80px;
 }
 
-/* ── Toolbar ─────────────────────────────────────────────────────────── */
 .toolbar {
   display: flex;
   justify-content: space-between;
@@ -14,11 +13,11 @@
 }
 
 .search-input {
-  padding: 8px 12px;
+  padding: 10px 12px;
   border: 1px solid var(--color-border);
   border-radius: var(--border-radius);
   font-size: var(--font-size-base);
-  width: 220px;
+  width: 180px;
   outline: none;
   transition: border-color 0.2s;
 }
@@ -27,7 +26,6 @@
   border-color: #aab4be;
 }
 
-/* ── Error banner ────────────────────────────────────────────────────── */
 .error-banner {
   background: #fdecea;
   border: 1px solid var(--color-error);
@@ -49,12 +47,13 @@
   font-size: var(--font-size-sm);
 }
 
-/* ── Table footer ────────────────────────────────────────────────────── */
 .table-footer {
+  background: var(--color-white);
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-top: var(--spacing-md);
+  margin-top: 0;
+  padding: 20px;
   flex-wrap: wrap;
   gap: var(--spacing-sm);
 }
@@ -70,7 +69,6 @@
   gap: var(--spacing-sm);
 }
 
-/* ── Paginación ──────────────────────────────────────────────────────── */
 .pagination {
   display: flex;
   gap: 4px;
@@ -99,7 +97,6 @@
   font-weight: 600;
 }
 
-/* ── Selector de cantidad ────────────────────────────────────────────── */
 .page-size-select {
   padding: 6px 10px;
   border: 1px solid var(--color-border);
@@ -109,7 +106,6 @@
   cursor: pointer;
 }
 
-/* ── Responsive ──────────────────────────────────────────────────────── */
 @media (max-width: 600px) {
   .toolbar {
     flex-direction: column;

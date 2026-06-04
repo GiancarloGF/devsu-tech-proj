@@ -1,27 +1,52 @@
 .app-header {
   background: var(--color-white);
-  border-bottom: 1px solid var(--color-border);
   padding: 0 var(--spacing-lg);
-  height: 56px;
+  height: 72px;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
 }
 
 .header-brand {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: var(--spacing-sm);
+  gap: 14px;
   font-weight: 700;
-  font-size: 1rem;
-  color: var(--color-text);
-  letter-spacing: 0.04em;
+  font-size: 1.25rem;
+  color: var(--color-brand);
+  letter-spacing: 0;
 }
 
 .header-icon {
-  font-size: 1.25rem;
+  position: relative;
+  width: 28px;
+  height: 22px;
+  border: 3px solid var(--color-brand);
+  border-radius: 3px;
+}
+
+.header-icon::before {
+  content: '';
+  position: absolute;
+  top: -11px;
+  right: -12px;
+  width: 22px;
+  height: 14px;
+  border: 3px solid var(--color-brand);
+  border-bottom: 0;
+  border-radius: 3px 3px 0 0;
+}
+
+.header-icon::after {
+  content: '';
+  position: absolute;
+  left: 8px;
+  top: 6px;
+  width: 6px;
+  height: 6px;
+  border: 2px solid var(--color-brand);
+  border-radius: 50%;
 }
 
 .header-title {

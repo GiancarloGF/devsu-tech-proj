@@ -1,11 +1,11 @@
 import { Routes } from '@angular/router';
 import { ProductRepository } from '../domain/repositories/product.repository';
-import { CreateProductUseCase } from '../domain/use-cases/create-product.use-case';
-import { DeleteProductUseCase } from '../domain/use-cases/delete-product.use-case';
-import { GetProductsUseCase } from '../domain/use-cases/get-products.use-case';
-import { UpdateProductUseCase } from '../domain/use-cases/update-product.use-case';
-import { VerifyProductIdUseCase } from '../domain/use-cases/verify-product-id.use-case';
-import { ProductHttpRepository } from '../infrastructure/repositories/product-http.repository';
+import { CreateProductUseCase } from '../domain/use-cases/create-product/create-product.use-case';
+import { DeleteProductUseCase } from '../domain/use-cases/delete-product/delete-product.use-case';
+import { GetProductsUseCase } from '../domain/use-cases/get-products/get-products.use-case';
+import { UpdateProductUseCase } from '../domain/use-cases/update-product/update-product.use-case';
+import { VerifyProductIdUseCase } from '../domain/use-cases/verify-product-id/verify-product-id.use-case';
+import { ProductHttpRepository } from '../infrastructure/repositories/product-http/product-http.repository';
 
 export const routes: Routes = [
   {

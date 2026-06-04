@@ -2,10 +2,10 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { environment } from '@env/environment';
 import { map, Observable } from 'rxjs';
-import { Product } from '../../domain/models/product.model';
-import { ProductRepository } from '../../domain/repositories/product.repository';
-import { ProductResponseDto } from '../dtos/product-response.dto';
-import { ProductMapper } from '../mappers/product.mapper';
+import { Product } from '../../../domain/models/product.model';
+import { ProductRepository } from '../../../domain/repositories/product.repository';
+import { ProductResponseDto } from '../../dtos/product-response.dto';
+import { ProductMapper } from '../../mappers/product/product.mapper';
 
 @Injectable()
 export class ProductHttpRepository implements ProductRepository {

@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { ProductRepository } from '../repositories/product.repository';
+import { ProductRepository } from '../../repositories/product.repository';
 
 @Injectable()
 export class DeleteProductUseCase {

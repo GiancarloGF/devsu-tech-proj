@@ -1,5 +1,5 @@
-import { Product } from '../../domain/models/product.model';
-import { ProductItemDto } from '../dtos/product-response.dto';
+import { Product } from '../../../domain/models/product.model';
+import { ProductItemDto } from '../../dtos/product-response.dto';
 
 export class ProductMapper {
   static fromDto(dto: ProductItemDto): Product {

@@ -1,7 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Product } from '../models/product.model';
-import { ProductRepository } from '../repositories/product.repository';
+import { Product } from '../../models/product.model';
+import { ProductRepository } from '../../repositories/product.repository';
 
 @Injectable()
 export class UpdateProductUseCase {

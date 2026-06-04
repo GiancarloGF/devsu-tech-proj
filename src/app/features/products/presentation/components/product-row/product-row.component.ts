@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, input, output, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ClickOutsideDirective } from '@shared/directives/click-outside.directive';
+import { ClickOutsideDirective } from '@shared/directives/click-outside/click-outside.directive';
 import { Product } from '../../../domain/models/product.model';
 
 @Component({
@@ -19,6 +19,15 @@ export class ProductRowComponent {
 
   readonly isMenuOpen = signal(false);
   readonly menuPosition = signal({ top: 0, left: 0 });
+
+  getLogoText(product: Product): string {
+    return product.name.slice(0, 2).toUpperCase();
+  }
+
+  onLogoError(event: Event): void {
+    const image = event.target as HTMLImageElement;
+    image.hidden = true;
+  }
 
   toggleMenu(event: MouseEvent): void {
     if (this.isMenuOpen()) {

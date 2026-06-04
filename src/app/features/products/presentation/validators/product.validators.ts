@@ -1,6 +1,6 @@
-import { AbstractControl, AsyncValidatorFn, ValidationErrors } from '@angular/forms';
-import { Observable, map, catchError, of, debounceTime, first, switchMap } from 'rxjs';
-import { VerifyProductIdUseCase } from '../../domain/use-cases/verify-product-id.use-case';
+import { AbstractControl, AsyncValidatorFn, ValidationErrors, ValidatorFn } from '@angular/forms';
+import { Observable, catchError, debounceTime, first, map, of, switchMap } from 'rxjs';
+import { VerifyProductIdUseCase } from '../../domain/use-cases/verify-product-id/verify-product-id.use-case';
 
 export function parseDateInputAsLocal(value: string): Date | null {
   const isoMatch = /^(\d{4})-(\d{2})-(\d{2})$/.exec(value);
@@ -50,7 +50,6 @@ export function formatDisplayDateInputValue(value: string): string {
   return [day, month, year].filter(Boolean).join('/');
 }
 
-// Validador síncrono: fecha de liberación >= hoy
 export function releaseDateValidator(control: AbstractControl): ValidationErrors | null {
   if (!control.value) return null;
 
@@ -64,8 +63,7 @@ export function releaseDateValidator(control: AbstractControl): ValidationErrors
   return release >= today ? null : { minDate: true };
 }
 
-// Validador síncrono: fecha de revisión = fecha liberación + 1 año
-export function revisionDateValidator(releaseDateControlName: string) {
+export function revisionDateValidator(releaseDateControlName: string): ValidatorFn {
   return (control: AbstractControl): ValidationErrors | null => {
     const parent = control.parent;
 
@@ -85,13 +83,10 @@ export function revisionDateValidator(releaseDateControlName: string) {
     const revision = parseDateInputAsLocal(control.value);
     if (!revision) return { dateFormat: true };
 
-    const diff = Math.abs(revision.getTime() - expected.getTime());
-
-    return diff < 86400000 ? null : { exactlyOneYear: true }; // tolerancia 1 día
+    return revision.getTime() === expected.getTime() ? null : { exactlyOneYear: true };
   };
 }
 
-// Validador asíncrono: ID no debe existir (para creación)
 export function uniqueIdValidator(verifyUseCase: VerifyProductIdUseCase): AsyncValidatorFn {
   return (control: AbstractControl): Observable<ValidationErrors | null> => {
     if (!control.value) return of(null);
@@ -100,7 +95,7 @@ export function uniqueIdValidator(verifyUseCase: VerifyProductIdUseCase): AsyncV
       debounceTime(400),
       switchMap(id => verifyUseCase.execute(id)),
       map(exists => (exists ? { idAlreadyExists: true } : null)),
-      catchError(() => of(null)),
+      catchError(() => of({ idVerificationFailed: true })),
       first(),
     );
   };

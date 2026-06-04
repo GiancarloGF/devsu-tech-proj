@@ -1,13 +1,12 @@
-/* You can add global styles to this file, and also import other style files */
-/* ── Variables ───────────────────────────────────────────────────────── */
 :root {
   --color-primary: #ffdd00;
   --color-primary-hover: #e6c800;
   --color-danger: #e74c3c;
-  --color-text: #2c3e50;
+  --color-brand: #142b63;
+  --color-text: #2f3338;
   --color-text-muted: #7f8c8d;
   --color-border: #dce1e7;
-  --color-bg: #f4f6f9;
+  --color-bg: #f4f6fb;
   --color-white: #ffffff;
   --color-error: #e74c3c;
   --border-radius: 6px;
@@ -19,7 +18,6 @@
   --spacing-lg: 24px;
 }
 
-/* ── Reset ── */
 *,
 *::before,
 *::after {
@@ -36,7 +34,6 @@ body {
   min-height: 100vh;
 }
 
-/* ── Botones compartidos ── */
 .btn-primary {
   padding: 10px 24px;
   background: var(--color-primary);
@@ -81,21 +78,20 @@ body {
   cursor: not-allowed;
 }
 
-/* Tabla responsive */
 @media (max-width: 768px) {
   .product-table th:nth-child(3),
   .product-table td:nth-child(3) {
     display: none;
-  } /* Ocultar descripción */
+  }
 
   .product-table th:nth-child(4),
   .product-table td:nth-child(4) {
     display: none;
-  } /* Ocultar fecha liberación */
+  }
 }
 
 @media (max-width: 480px) {
   .product-form-grid {
     grid-template-columns: 1fr;
-  } /* Form una sola columna */
+  }
 }

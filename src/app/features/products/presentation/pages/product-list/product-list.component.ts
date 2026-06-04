@@ -10,8 +10,8 @@ import {
 } from '@angular/core';
 import { Router } from '@angular/router';
 import { Product } from '@features/products/domain/models/product.model';
-import { DeleteProductUseCase } from '@features/products/domain/use-cases/delete-product.use-case';
-import { GetProductsUseCase } from '@features/products/domain/use-cases/get-products.use-case';
+import { DeleteProductUseCase } from '@features/products/domain/use-cases/delete-product/delete-product.use-case';
+import { GetProductsUseCase } from '@features/products/domain/use-cases/get-products/get-products.use-case';
 import { SkeletonComponent } from '@shared/components/skeleton/skeleton.component';
 import { firstValueFrom } from 'rxjs';
 import { DeleteModalComponent } from '../../components/delete-modal/delete-modal.component';
@@ -30,7 +30,7 @@ export class ProductListComponent {
   private readonly deleteProductUseCase = inject(DeleteProductUseCase);
   private readonly router = inject(Router);
 
-  // ── Controles de usuario y estado derivado
+  // User controls and derived state.
   readonly searchTerm = signal('');
   readonly pageSize = signal(5);
   readonly pageSizeOptions = [5, 10, 20];
@@ -68,20 +68,27 @@ export class ProductListComponent {
 
   readonly pagesArray = computed(() => Array.from({ length: this.totalPages() }, (_, i) => i + 1));
 
-  // ── Estado del modal de eliminación ──────────────────────────────────────
+  // Delete modal state.
   readonly productToDelete = signal<Product | null>(null);
   readonly isDeleteModalOpen = signal(false);
   readonly deleteErrorMessage = signal('');
 
-  // ── Acciones
   onSearch(term: string): void {
     this.searchTerm.set(term);
-    // currentPage se resetea automáticamente via linkedSignal
+  }
+
+  onSearchInput(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    this.onSearch(input.value);
   }
 
   onPageSizeChange(size: number): void {
     this.pageSize.set(size);
-    // currentPage se resetea automáticamente via linkedSignal
+  }
+
+  onPageSizeInput(event: Event): void {
+    const select = event.target as HTMLSelectElement;
+    this.onPageSizeChange(Number(select.value));
   }
 
   onPageChange(page: number): void {
@@ -110,7 +117,7 @@ export class ProductListComponent {
       next: () => {
         this.isDeleteModalOpen.set(false);
         this.productToDelete.set(null);
-        this.productsResource.reload(); // ← recarga el resource en lugar de llamar loadProducts()
+        this.productsResource.reload();
       },
       error: (err: Error) => {
         this.deleteErrorMessage.set(err.message);

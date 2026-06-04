@@ -1,8 +1,8 @@
 .table-wrapper {
   background: var(--color-white);
-  border-radius: var(--border-radius);
-  box-shadow: var(--shadow-card);
+  border-radius: 0;
   overflow-x: auto;
+  padding: 20px;
 }
 
 .product-table {
@@ -43,6 +43,21 @@
   white-space: nowrap;
 }
 
+.info-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+  margin-left: 6px;
+  border-radius: 50%;
+  background: #8a8f98;
+  color: var(--color-white);
+  font-size: 0.6875rem;
+  font-weight: 700;
+  line-height: 1;
+}
+
 .product-table tbody tr {
   border-bottom: 1px solid var(--color-border);
   transition: background 0.15s;
@@ -62,7 +77,6 @@
   color: var(--color-text-muted);
 }
 
-/* Responsive: ocultar columnas secundarias en móvil */
 @media (max-width: 768px) {
   .product-table thead th:nth-child(3),
   .product-table thead th:nth-child(4) {

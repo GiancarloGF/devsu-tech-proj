@@ -10,18 +10,20 @@ import {
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
-import { CreateProductUseCase } from '../../../domain/use-cases/create-product.use-case';
-import { UpdateProductUseCase } from '../../../domain/use-cases/update-product.use-case';
-import { VerifyProductIdUseCase } from '../../../domain/use-cases/verify-product-id.use-case';
+import { Product } from '@features/products/domain/models/product.model';
+import { CreateProductUseCase } from '../../../domain/use-cases/create-product/create-product.use-case';
+import { UpdateProductUseCase } from '../../../domain/use-cases/update-product/update-product.use-case';
+import { VerifyProductIdUseCase } from '../../../domain/use-cases/verify-product-id/verify-product-id.use-case';
 import {
   formatDisplayDateInput,
   formatDisplayDateInputValue,
   formatDateInput,
   parseDateInputAsLocal,
   releaseDateValidator,
+  revisionDateValidator,
   uniqueIdValidator,
 } from '../../validators/product.validators';
-import { GetProductsUseCase } from '@features/products/domain/use-cases/get-products.use-case';
+import { GetProductsUseCase } from '@features/products/domain/use-cases/get-products/get-products.use-case';
 
 @Component({
   selector: 'app-product-form',
@@ -40,7 +42,6 @@ export class ProductFormComponent implements OnInit {
   private readonly verifyUseCase = inject(VerifyProductIdUseCase);
   private readonly getProductsUseCase = inject(GetProductsUseCase);
 
-  // ── Estado con Signals
   readonly isSubmitting = signal(false);
   readonly errorMessage = signal('');
   readonly editId = signal('');
@@ -55,9 +56,7 @@ export class ProductFormComponent implements OnInit {
     this.isSubmitting() ? 'Guardando...' : this.isEditMode() ? 'Actualizar' : 'Agregar',
   );
 
-  // date_revision se recalcula automáticamente cuando
-  // cambia dateReleaseValue. Si el usuario lo modifica manualmente
-  // (en modo editar), ese valor se respeta hasta que cambie la fuente.
+  // The review date is derived from the release date and synced back to the form.
   private readonly dateReleaseValue = signal('');
 
   readonly dateRevisionValue = linkedSignal<string, string>({
@@ -95,15 +94,13 @@ export class ProductFormComponent implements OnInit {
       description: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(200)]],
       logo: ['', Validators.required],
       date_release: ['', [Validators.required, releaseDateValidator]],
-      date_revision: [{ value: '', disabled: true }, Validators.required],
+      date_revision: ['', [Validators.required, revisionDateValidator('date_release')]],
     });
 
-    // Cada vez que cambia date_release en el form, actualizamos el signal fuente.
-    // El linkedSignal dateRevisionValue reacciona y calcula la nueva fecha.
-    // Luego sincronizamos el valor calculado de vuelta al control del form.
     this.form.get('date_release')?.valueChanges.subscribe((value: string) => {
       this.dateReleaseValue.set(value ?? '');
       this.form.get('date_revision')?.setValue(this.dateRevisionValue(), { emitEvent: false });
+      this.form.get('date_revision')?.markAsTouched();
     });
   }
 
@@ -145,7 +142,6 @@ export class ProductFormComponent implements OnInit {
     this.form.get('date_release')?.setValue(formattedValue);
   }
 
-  // Helpers para el template
   isFieldInvalid(field: string): boolean {
     const control = this.form.get(field);
     return !!(control?.invalid && (control?.dirty || control?.touched));
@@ -164,24 +160,14 @@ export class ProductFormComponent implements OnInit {
     if (control.errors['exactlyOneYear'])
       return 'Debe ser exactamente un año después de la fecha de liberación';
     if (control.errors['idAlreadyExists']) return 'Este ID ya existe';
+    if (control.errors['idVerificationFailed']) return 'No se pudo verificar el ID';
     return '';
   }
 
   private loadProductData(): void {
-    const state = history.state as {
-      product?: {
-        id: string;
-        name: string;
-        description: string;
-        logo: string;
-        date_release: string;
-        date_revision: string;
-      };
-    };
+    const state = history.state as { product?: Product };
 
     if (state?.product) {
-      // Al hacer patchValue con date_release, el valueChanges dispara
-      // y dateRevisionValue se recalcula via linkedSignal.
       this.form.patchValue(this.toDisplayFormValue(state.product));
       return;
     }
@@ -196,7 +182,7 @@ export class ProductFormComponent implements OnInit {
         if (product) {
           this.form.patchValue(this.toDisplayFormValue(product));
         } else {
-          this.router.navigate(['/products']); // ID inválido
+          this.router.navigate(['/products']);
         }
       },
       error: () => this.router.navigate(['/products']),
@@ -210,7 +196,7 @@ export class ProductFormComponent implements OnInit {
     logo: string;
     date_release: string;
     date_revision: string;
-  }) {
+  }): Product {
     return {
       ...formValue,
       date_release: this.toIsoDateValue(formValue.date_release),
@@ -218,14 +204,7 @@ export class ProductFormComponent implements OnInit {
     };
   }
 
-  private toDisplayFormValue(product: {
-    id: string;
-    name: string;
-    description: string;
-    logo: string;
-    date_release: string;
-    date_revision: string;
-  }) {
+  private toDisplayFormValue(product: Product): Product {
     return {
       ...product,
       date_release: this.toDisplayDateValue(product.date_release),
