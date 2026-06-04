@@ -1,6 +1,6 @@
 import { Router } from '@angular/router';
 import { Product } from '@features/products/domain/models/product.model';
-import { DeleteProductUseCase } from '@features/products/domain/use-cases/delete-product.use-case';
+import { DeleteProductUseCase } from '@features/products/domain/use-cases/delete-product/delete-product.use-case';
 import { GetProductsUseCase } from '@features/products/domain/use-cases/get-products/get-products.use-case';
 import { MockBuilder, MockRender } from 'ng-mocks';
 import { Observable, of, throwError } from 'rxjs';

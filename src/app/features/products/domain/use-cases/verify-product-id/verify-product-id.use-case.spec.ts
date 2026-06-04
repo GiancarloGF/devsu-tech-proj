@@ -1,7 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 import { of } from 'rxjs';
 import { beforeEach, describe, expect, it, vi, type Mocked } from 'vitest';
-import { ProductRepository } from '../repositories/product.repository';
+import { ProductRepository } from '../../repositories/product.repository';
 import { VerifyProductIdUseCase } from './verify-product-id.use-case';
 
 describe('VerifyProductIdUseCase', () => {

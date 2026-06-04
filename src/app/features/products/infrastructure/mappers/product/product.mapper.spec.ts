@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
-import { Product } from '../../domain/models/product.model';
-import { ProductItemDto } from '../dtos/product-response.dto';
+import { Product } from '../../../domain/models/product.model';
+import { ProductItemDto } from '../../dtos/product-response.dto';
 import { ProductMapper } from './product.mapper';
 
 describe('ProductMapper', () => {

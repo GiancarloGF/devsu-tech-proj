@@ -10,7 +10,7 @@ import {
   revisionDateValidator,
   uniqueIdValidator,
 } from './product.validators';
-import { VerifyProductIdUseCase } from '../../domain/use-cases/verify-product-id.use-case';
+import { VerifyProductIdUseCase } from '../../domain/use-cases/verify-product-id/verify-product-id.use-case';
 
 describe('product validators', () => {
   afterEach(() => {

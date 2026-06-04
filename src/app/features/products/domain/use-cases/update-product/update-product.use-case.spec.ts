@@ -1,8 +1,8 @@
 import { TestBed } from '@angular/core/testing';
 import { of } from 'rxjs';
 import { beforeEach, describe, expect, it, vi, type Mocked } from 'vitest';
-import { Product } from '../models/product.model';
-import { ProductRepository } from '../repositories/product.repository';
+import { Product } from '../../models/product.model';
+import { ProductRepository } from '../../repositories/product.repository';
 import { UpdateProductUseCase } from './update-product.use-case';
 
 describe('UpdateProductUseCase', () => {
